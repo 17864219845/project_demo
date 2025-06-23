@@ -1,0 +1,19 @@
+[project]
+name = "api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "celery==5.5.3",
+    "flask==3.1.0",
+    "flask-cors==6.0.0",
+    "flask-login==0.6.3",
+    "flask-migrate==4.0.7",
+    "flask-restful==0.3.10",
+    "flask-sqlalchemy==3.1.1",
+    "gevent==24.11.1",
+    "pydantic-settings~=2.9.1",
+    "pyjwt==2.8.0",
+    "requests>=2.32.4",
+]
