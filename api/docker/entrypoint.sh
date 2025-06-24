@@ -28,10 +28,10 @@ elif [[ "${MODE}" == "beat" ]]; then
   exec celery -A app.celery beat --loglevel ${LOG_LEVEL:-INFO}
 else
   if [[ "${DEBUG}" == "true" ]]; then
-    exec flask run --host=${DIFY_BIND_ADDRESS:-0.0.0.0} --port=${DIFY_PORT:-5000} --debug
+    exec flask run --host=${API_BIND_ADDRESS:-0.0.0.0} --port=${API_PORT:-5000} --debug
   else
     exec gunicorn \
-      --bind "${DIFY_BIND_ADDRESS:-0.0.0.0}:${DIFY_PORT:-5000}" \
+      --bind "${API_BIND_ADDRESS:-0.0.0.0}:${API_PORT:-5000}" \
       --workers ${SERVER_WORKER_AMOUNT:-1} \
       --worker-class ${SERVER_WORKER_CLASS:-gevent} \
       --worker-connections ${SERVER_WORKER_CONNECTIONS:-10} \
