@@ -20,7 +20,7 @@ RUN apt-get update \
 # Install Python dependencies
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --locked --index-url https://pypi.tuna.tsinghua.edu.cn/simple
+RUN uv sync --locked
 
 # production stage
 FROM base AS production
