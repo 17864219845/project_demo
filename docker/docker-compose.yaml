@@ -38,7 +38,7 @@ services:
     volumes:
       - ./volumes/db/data:/var/lib/postgresql/data
     healthcheck:
-      test: [ 'CMD', 'pg_isready', '-h', 'db', '-U', '${PGUSER:-localhost}', '-d', '${POSTGRES_DB:-localhost}' ]
+      test: [ 'CMD', 'pg_isready', '-h', 'db', '-U', '${PGUSER:-postgres}', '-d', '${POSTGRES_DB:-api}' ]
       interval: 1s
       timeout: 3s
       retries: 60
