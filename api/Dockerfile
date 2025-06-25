@@ -3,6 +3,11 @@ FROM python:3.12-slim-bookworm AS base
 
 WORKDIR /app/api
 
+# Set environment directory to avoid installing .venv and mounting overlays in project directory
+ENV VIRTUAL_ENV=/opt/venv
+RUN python -m venv ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
 # Install uv
 ENV UV_VERSION=0.7.13
 
@@ -48,10 +53,6 @@ RUN \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy Python environment and packages
-ENV VIRTUAL_ENV=/app/api/.venv
-COPY --from=packages ${VIRTUAL_ENV} ${VIRTUAL_ENV}
-ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 # Copy source code
 COPY . /app/api/
