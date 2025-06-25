@@ -27,6 +27,11 @@ class DeploymentConfig(BaseSettings):
         default="2IN5F*3io#@&@HFU",
     )
 
+    MIGRATION_ENABLED: bool = Field(
+        description="Whether to enable migration settings",
+        default=True,
+    )
+
 
 class DatabaseConfig(BaseSettings):
     DB_HOST: str = Field(

@@ -19,12 +19,16 @@ def initialize_extensions(app):
     from extensions import (
         ext_app_metrics,
         ext_blueprints,
+        ext_database,
+        ext_migrate,
         ext_login,
     )
 
     extensions = [
         ext_app_metrics,
         ext_blueprints,
+        ext_database,
+        ext_migrate,
         ext_login,
     ]
     for ext in extensions:
