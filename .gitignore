@@ -142,7 +142,7 @@ web/.vscode/settings.json
 *.iml
 api/.idea
 
-api/.env
+#api/.env
 api/storage/*
 
 docker-legacy/volumes/app/storage/*
@@ -186,10 +186,6 @@ docker/nginx/ssl/*
 !docker/nginx/ssl/.gitkeep
 docker/middleware.env
 docker/docker-compose.override.yaml
-
-sdks/python-client/build
-sdks/python-client/dist
-sdks/python-client/dify_client.egg-info
 
 .vscode/*
 !.vscode/launch.json.template
