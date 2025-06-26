@@ -34,9 +34,8 @@ RUN apt-get update \
 
 # Copy Python environment and packages
 ENV VIRTUAL_ENV=/app/api/.venv
-ENV COPY_ENV=/app/.venv
-COPY --from=packages ${VIRTUAL_ENV} ${COPY_ENV}
-ENV PATH="${COPY_ENV}/bin:${PATH}"
+COPY --from=packages ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
 
 # Copy source code
 COPY . /app/api/
