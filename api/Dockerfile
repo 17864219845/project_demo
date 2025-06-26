@@ -2,29 +2,49 @@ FROM python:3.12-slim-bookworm AS base
 
 WORKDIR /app/api
 
-ENV UV_VERSION=0.7.13
-ENV UV_VENV=off
-ENV TZ=UTC
+# Install uv
+ENV UV_VERSION=0.7.11
 
-# 安装依赖
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc g++ libc-dev libffi-dev curl libsqlite3-0 zlib1g \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir uv==${UV_VERSION}
 
-# 安装 uv
-RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple uv==${UV_VERSION}
 
-# 安装依赖前先拷贝依赖文件（提高缓存效率）
+FROM base AS packages
+
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gcc g++ libc-dev libffi-dev
+
+# Install Python dependencies
 COPY pyproject.toml uv.lock ./
 RUN uv sync --locked
 
-# 再拷贝源码
-COPY . ./
+# production stage
+FROM base AS production
 
-# 拷贝并授权 entrypoint
+# set timezone
+ENV TZ=UTC
+
+WORKDIR /app/api
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        curl libsqlite3-0 zlib1g \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy Python environment and packages
+ENV VIRTUAL_ENV=/app/api/.venv
+ENV COPY_ENV = /app/.venv
+COPY --from=packages ${VIRTUAL_ENV} ${COPY_ENV}
+ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+
+# Copy source code
+COPY . /app/api/
+
+# Copy entrypoint
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 5000
 
-ENTRYPOINT ["bash", "/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
