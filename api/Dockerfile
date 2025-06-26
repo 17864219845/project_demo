@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple uv==${UV_VERSION}
 
 # 安装依赖前先拷贝依赖文件（提高缓存效率）
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml uv.lock ./
 RUN uv sync --locked
 
 # 再拷贝源码
