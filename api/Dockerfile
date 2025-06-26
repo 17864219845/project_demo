@@ -12,9 +12,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
+ENV UV_VENV=off
 COPY pyproject.toml uv.lock ./
-
-RUN uv sync --locked --system
+RUN uv sync --locked
 
 ENV TZ=UTC
 
