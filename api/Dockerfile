@@ -36,7 +36,7 @@ RUN apt-get update \
 ENV VIRTUAL_ENV=/app/api/.venv
 ENV COPY_ENV = /app/.venv
 COPY --from=packages ${VIRTUAL_ENV} ${COPY_ENV}
-ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"
+ENV PATH="${COPY_ENV}/bin:${PATH}"
 
 # Copy source code
 COPY . /app/api/
@@ -46,5 +46,3 @@ COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 5000
-
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

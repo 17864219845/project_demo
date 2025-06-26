@@ -15,6 +15,8 @@ from configs import config
 #     print('no', result.json())
 
 
+import flask_migrate
 
+flask_migrate.upgrade()
 
 
