@@ -1,4 +1,6 @@
 import logging
+import os
+
 import click
 
 
@@ -6,11 +8,12 @@ import click
 def upgrade_db():
     try:
         click.echo(click.style("Starting database migration.", fg="green"))
-
-        # run db migration
         import flask_migrate
-
-        flask_migrate.upgrade()
+        if not os.path.exists("migrations"):
+            click.echo(click.style("Migrations folder not found. Running init.", fg="yellow"))
+            flask_migrate.init()
+            flask_migrate.migrate()  # 自动生成迁移脚本
+        flask_migrate.upgrade()  # 应用迁移到数据库
 
         click.echo(click.style("Database migration successful!", fg="green"))
 
