@@ -17,7 +17,7 @@ else:
     from app_factory import create_app_init
 
     app = create_app_init()
-    # celery = app.extensions["celery"]
+    celery = app.extensions["celery"]
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

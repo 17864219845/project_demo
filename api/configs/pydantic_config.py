@@ -1,13 +1,11 @@
-# CURRENT_VERSION = "1.0.0"
-# DEBUG = True
-# WEB_API_CORS_ALLOW_ORIGINS = ["*"]
-# SECRET_KEY = "2IN5F*3io#@&@HFU"
 import os
 from urllib.parse import parse_qsl, quote_plus
 from pydantic import Field, NonNegativeFloat, NonNegativeInt, PositiveFloat, PositiveInt, computed_field
 from pydantic_settings import BaseSettings
-from typing import Set, Any
+from typing import Set, Any, Optional
 
+
+# [Optional]: str or None
 
 class DeploymentConfig(BaseSettings):
     DEBUG: bool = Field(
@@ -139,3 +137,20 @@ class DatabaseConfig(BaseSettings):
             "pool_pre_ping": self.SQLALCHEMY_POOL_PRE_PING,
             "connect_args": connect_args,
         }
+
+
+class CeleryConfig(BaseSettings):
+    CELERY_BROKER_URL: Optional[str] = Field(
+        description="URL of the message broker for Celery tasks.",
+        default=None,
+    )
+
+    CELERY_RESULT_BACKEND: Optional[str] = Field(
+        description="Redis backend result",
+        default=None,
+    )
+
+    CELERY_LOG_FORMAT: Optional[str] = Field(
+        description="Celery log format",
+        default=None
+    )

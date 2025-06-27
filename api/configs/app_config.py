@@ -1,10 +1,11 @@
 from pydantic_settings import SettingsConfigDict
-from configs.pydantic_config import DeploymentConfig, DatabaseConfig
+from configs.pydantic_config import DeploymentConfig, DatabaseConfig, CeleryConfig
 
 
 class EnvConfig(
     DeploymentConfig,
-    DatabaseConfig
+    DatabaseConfig,
+    CeleryConfig,
 ):
     model_config = SettingsConfigDict(
         # read from dotenv format config file
