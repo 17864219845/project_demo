@@ -22,6 +22,7 @@ def initialize_extensions(app):
         ext_database,
         ext_migrate,
         ext_login,
+        ext_commands,
     )
 
     extensions = [
@@ -30,6 +31,7 @@ def initialize_extensions(app):
         ext_database,
         ext_migrate,
         ext_login,
+        ext_commands,
     ]
     for ext in extensions:
         short_name = ext.__name__.split(".")[-1]
