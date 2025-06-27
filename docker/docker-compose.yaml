@@ -50,6 +50,6 @@ services:
     command: redis-server --requirepass ${REDIS_PASSWORD:-localhost}
     healthcheck:
       test: [ 'CMD', 'redis-cli', 'ping' ]
-  networks:
-    general:
-      driver: bridge
+networks:
+  general:
+    driver: bridge
