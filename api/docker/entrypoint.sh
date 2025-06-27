@@ -2,11 +2,6 @@
 
 set -e
 
-if [[ "${MIGRATION_ENABLED}" == "true" ]]; then
-  echo "Running migrations"
-  flask upgrade-db
-fi
-
 if [[ "${MODE}" == "worker" ]]; then
 
   # Get the number of available CPU cores
@@ -27,6 +22,10 @@ if [[ "${MODE}" == "worker" ]]; then
 elif [[ "${MODE}" == "beat" ]]; then
   exec celery -A app.celery beat --loglevel ${LOG_LEVEL:-INFO}
 else
+  if [[ "${MIGRATION_ENABLED}" == "true" ]]; then
+    echo "Running migrations"
+    flask upgrade-db
+  fi
   if [[ "${DEBUG}" == "true" ]]; then
     exec flask run --host=${API_BIND_ADDRESS:-0.0.0.0} --port=${API_PORT:-5000} --debug
   else
