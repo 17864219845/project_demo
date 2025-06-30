@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir uv==${UV_VERSION}
 
 FROM base AS packages
 
+WORKDIR /app/api
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gcc g++ libc-dev libffi-dev curl libsqlite3-0 zlib1g \
