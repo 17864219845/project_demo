@@ -18,11 +18,11 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
-COPY pyproject.toml uv.lock ./
+COPY pyproject.toml uv.lock entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 RUN uv sync --locked --active
-COPY . /app/api/
-RUN chmod +x /entrypoint.sh
+COPY . /app/api
 
 EXPOSE 5000
 
-ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
