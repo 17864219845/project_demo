@@ -25,4 +25,4 @@ COPY . /app/api
 
 EXPOSE 5000
 
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+#ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
